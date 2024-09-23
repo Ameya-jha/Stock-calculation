@@ -1,0 +1,54 @@
+# Function to calculate the profit/loss and profit percentage
+def calculate_profit_loss(buy_price, sell_price, quantity):
+    profit_loss = (sell_price - buy_price) * quantity
+    profit_loss_percentage = ((sell_price - buy_price) / buy_price) * 100
+    total_buy_value = buy_price * quantity
+    return profit_loss, profit_loss_percentage, total_buy_value
+
+# Input details for each stock
+def input_stock_data(stock_number):
+    print(f"\nEnter details for stock {stock_number}:")
+    stock_name = input("Enter stock name: ")
+    buy_price = float(input("Enter the buy price: "))
+    sell_price = float(input("Enter the sell price: "))
+    quantity = int(input("Enter the quantity: "))
+    return stock_name, buy_price, sell_price, quantity
+
+# Calculate and display profit/loss for each stock, and net profit/loss in the end
+def calculate_and_display():
+    total_profit_loss = 0
+    total_buy_value_sum = 0
+    
+    for i in range(4):
+        stock_name, buy_price, sell_price, quantity = input_stock_data(i + 1)
+        
+        # Calculate profit/loss, percentage, and total buy value
+        profit_loss, profit_loss_percentage, total_buy_value = calculate_profit_loss(buy_price, sell_price, quantity)
+        
+        # Accumulate total profit/loss and total buy value
+        total_profit_loss += profit_loss
+        total_buy_value_sum += total_buy_value
+        
+        # Display individual stock profit/loss and percentage
+        if profit_loss >= 0:
+            result_label = "Profit"
+        else:
+            result_label = "Loss"
+        
+        print(f"\nFor {stock_name}:")
+        print(f"  {result_label}: {profit_loss:.2f}")
+        print(f"  Profit/Loss Percentage: {profit_loss_percentage:.2f}%")
+    
+    # Calculate net profit/loss percentage
+    if total_buy_value_sum > 0:
+        net_profit_loss_percentage = (total_profit_loss / total_buy_value_sum) * 100
+        result_label = "Net Profit" if total_profit_loss >= 0 else "Net Loss"
+        
+        # Display the net profit/loss and percentage
+        print(f"\nOverall {result_label}: {total_profit_loss:.2f}")
+        print(f"Overall Profit/Loss Percentage: {net_profit_loss_percentage:.2f}%")
+    else:
+        print("No valid buy value to calculate overall profit/loss.")
+
+# Run the calculation for 4 stocks
+calculate_and_display()
